@@ -71,7 +71,7 @@ tasks.withType(AbstractArchiveTask) {
 }
 tasks.withType(com.github.spotbugs.SpotBugsTask) {
     reports {
-        html.enabled = true
+        //html.enabled = true
         xml.enabled  = true
     }
     pluginClasspath = project.configurations.spotbugsPlugins

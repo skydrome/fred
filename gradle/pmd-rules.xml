@@ -69,18 +69,5 @@
     <rule ref="category/java/documentation.xml">
         <exclude name="CommentSize"/>
     </rule>
-    <rule ref="category/java/documentation.xml/CommentRequired">
-        <properties>
-            <property name="fieldCommentRequirement" value="Ignored" />
-            <property name="protectedMethodCommentRequirement" value="Ignored" />
-            <property name="publicMethodCommentRequirement" value="Ignored" />
-            <property name="serialVersionUIDCommentRequired" value="Ignored" />
-            <property name="serialVersionUIDCommentRequired" value="Ignored" />
-            <property name="enumCommentRequirement" value="Ignored" />
-            <property name="headerCommentRequirement" value="Ignored" />
-            <property name="methodWithOverrideCommentRequirement" value="Ignored" />
-            <property name="accessorCommentRequirement" value="Ignored" />
-        </properties>
-    </rule>
 
 </ruleset>
