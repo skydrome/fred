@@ -4,7 +4,9 @@ clone_depth: 10
 skip_commits:
   message: /\[ci skip\]/
 
-image: Visual Studio 2019
+image:
+  - Visual Studio 2017
+  - Visual Studio 2019
 
 cache:
   - '%USERPROFILE%/.gradle/caches'
@@ -36,9 +38,10 @@ test_script:
   - gradlew.bat --no-build-cache --no-daemon test
 
 after_test:
-  - ps: del "$env:USERPROFILE\.gradle\caches\modules-2\modules-2.lock"
+  - ps: del -Recurse "$env:USERPROFILE\.gradle\caches\*\*.lock"
   - ps: del -Recurse "$env:USERPROFILE\.gradle\caches\*\plugin-resolution"
   - ps: del -Recurse "$env:USERPROFILE\.gradle\caches\*\scripts"
+  - ps: del -Recurse "$env:USERPROFILE\.gradle\caches\*\fileHashes"
 
 on_finish:
   - ps: |
