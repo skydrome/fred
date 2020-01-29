@@ -53,8 +53,8 @@ apply plugin: 'org.sonarqube'
 sonarqube {
     properties {
         property 'sonar.login', System.getenv('SONAR_LOGIN')
-        property 'sonar.projectKey', 'freenet_fred'
-        property 'sonar.organization', 'freenet-github'
+        property 'sonar.projectKey', System.getenv('SONAR_KEY')
+        property 'sonar.organization', System.getenv('SONAR_ORG')
 
         property 'sonar.verbose', 'true'
         property 'sonar.sourceEncoding', 'UTF-8'
@@ -63,5 +63,6 @@ sonarqube {
 
         property 'sonar.java.pmd.reportPaths', "$buildDir/reports/pmd/main.xml"
         property 'sonar.java.spotbugs.reportPaths', "$buildDir/reports/spotbugs/main.xml"
+        property 'sonar.coverage.jacoco.xmlReportPaths', "$buildDir/reports/jacoco/test/jacocoTestReport.xml"
     }
 }

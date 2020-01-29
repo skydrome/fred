@@ -25,9 +25,6 @@ cache:
     - $HOME/.gradle/caches/
     - $HOME/.gradle/wrapper/
 
-before_install:
-  - wget https://raw.githubusercontent.com/sormuras/bach/master/install-jdk.sh
-
 install:
   - echo -e "org.gradle.jvmargs=-Xmx2g -XX:MaxMetaspaceSize=512m\norg.gradle.caching=false" >>gradle.properties
 
@@ -46,25 +43,6 @@ matrix:
     - name: openjdk13
       jdk: openjdk13
 
-  #   - name: openjdk-ea
-  #     jdk: openjdk-ea
-  # allow_failures:
-  #   - jdk: openjdk-ea
-
-  # - name: 'openjdk13'
-  #   jdk: openjdk13
-  #   install:
-  #     - bash install-jdk.sh -F 14
-  #     - echo "javaHome=/home/travis/jdk-14" >>gradle.properties
-  #     - echo "targetJavaVersion=14"         >>gradle.properties
-  #   script: ./gradlew jar
-
-  # - name: 'Sonar'
-  #   jdk: openjdk8
-  #   script:
-  #     - ./gradlew clean
-  #     - ./gradlew jar test jacocoTestReport pmdMain pmdTest spotbugsMain spotbugsTest javadoc tar sonarqube
-
     - name: 1.8.0_112-b16
       os: osx
       osx_image: xcode9.3
@@ -74,6 +52,12 @@ matrix:
     - name: 13.0.1
       os: osx
       osx_image: xcode11.3
+
+    # - name: 'Sonar'
+    #   jdk: openjdk13
+    #   script:
+    #     - ./gradlew clean
+    #     - ./gradlew test pmdMain pmdTest spotbugsMain spotbugsTest jacocoTestReport sonarqube
 
 
 before_deploy:

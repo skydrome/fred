@@ -13,7 +13,7 @@ ext {
         hamcrest     : '2.2',
         jUnit        : '4.13',
         jUnitVintage : '5.6.0',
-        findSecBugs  : '1.10.1', // http://find-sec-bugs.github.io
+        //findSecBugs  : '1.10.1', // http://find-sec-bugs.github.io
     ]
 
     def libs = [
@@ -25,7 +25,7 @@ ext {
             mockito      : [group: 'org.mockito', name: 'mockito-core', version: version.mockito],
             hamcrest     : [group: 'org.hamcrest', name: 'hamcrest-library', version: version.hamcrest],
             junitvintage : [group: 'org.junit.vintage', name: 'junit-vintage-engine', version: version.jUnitVintage],
-            findsecbugs  : [group: 'com.h3xstream.findsecbugs', name: 'findsecbugs-plugin', version: version.findSecBugs],
+            //findsecbugs  : [group: 'com.h3xstream.findsecbugs', name: 'findsecbugs-plugin', version: version.findSecBugs],
     ]
 
     moduleDependencies = [
@@ -37,6 +37,6 @@ ext {
             [config: "testImplementation", dep: libs.mockito],
             [config: "testImplementation", dep: libs.hamcrest],
             [config: "testRuntimeOnly", dep: libs.junitvintage],
-            [config: "spotbugsPlugins", dep: libs.findsecbugs],
+            //[config: "spotbugsPlugins", dep: libs.findsecbugs],
     ]
 }
