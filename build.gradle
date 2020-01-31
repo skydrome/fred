@@ -42,7 +42,9 @@ apply from: "$rootDir/gradle/analysis.gradle"
 String gitrev = grgit.open(dir: project.rootDir).describe()
 // output: 11.0.3 amd64 (Oracle Corporation)
 String buildenv = "${System.properties['java.version']} ${System.properties['os.arch']} (${System.properties['java.vendor']})"
-// true for windows platform
+// true if running on travis or appveyor
+boolean isCiServer = System.getenv("CI")
+// true if running on windows
 boolean isWindows = org.gradle.internal.os.OperatingSystem.current().isWindows()
 
 tasks.withType(JavaCompile) {
@@ -199,8 +201,8 @@ test {
         exclude "${it}.class"
     }
 
-    // TODO: these tests hang on windows
-    if (isWindows)
+    // TODO: these tests hang on windows or use alot of resources on CI servers
+    if (isWindows || isCiServer)
         exclude(['freenet/store/RAMSaltMigrationTest*',
                  'freenet/store/caching/CachingFreenetStoreTest*'])
 
