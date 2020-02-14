@@ -1,7 +1,7 @@
 // See https://github.com/vlsi/vlsi-release-plugins
 buildscript {
   dependencies {
-    classpath('com.github.vlsi.gradle:checksum-dependency-plugin:1.55') {
+    classpath('com.github.vlsi.gradle:checksum-dependency-plugin:1.61') {
       // Gradle ships kotlin-stdlib which is good enough
       exclude(group: "org.jetbrains.kotlin", module:"kotlin-stdlib")
     }
@@ -21,8 +21,8 @@ def expectedSha512 = [
     'okhttp-4.1.0.jar',
   '93E7A41BE44CC17FB500EA5CD84D515204C180AEC934491D11FC6A71DAEA761FB0EECEF865D6FD5C3D88AAF55DCE3C2C424BE5BA5D43BEBF48D05F1FA63FA8A7':
     'okio-2.2.2.jar',
-  'B9F1FAD15FEFA21686867449544783AD2CDFB7802A6C4F83C0AFB79A5392FEB22FA13D3EA72BC7F762ACE5FD30B603145FAA8466550221B3458E1CAE1ED60C34':
-    'checksum-dependency-plugin-1.55.jar'
+  '1239290894AE69F1AE5885FFBE71C14FBD0CA1BD3B113EA819AD23FDA6013B7637C757725D3B94EEB0A32F2F1F53F7A8936DD3AD49E2F01D588810A4A584FB4':
+    'checksum-dependency-plugin-1.61.jar'
 ]
 
 static def sha512(File file) {
