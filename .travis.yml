@@ -1,7 +1,6 @@
-language: java
 os: linux
 dist: xenial
-services: haveged
+language: java
 
 git:
   depth: 10
@@ -9,7 +8,6 @@ git:
 
 env:
   global:
-    - GRADLE_OPTS="-Dorg.gradle.internal.launcher.welcomeMessageEnabled=false"
     - AWS_ACCESS_KEY_ID="AKIAJQUIQIL3XTBHT3DA"
     - secure: "C5Y0miWN35KMpWNT/r3n31J/JjUJA6a9I/w5DUkm5xFLv1oStOvNL9KykRQIL4+9yW7hYUcGOI0iP9ZjtbxRouP5//PCjhlgzIGJ3WImVZq4fLNl3sq3DYtgZJT5rUeXn8r8cKE3/sloEbcbz7dFNXmbSACuaZ0/T3IZpgP/Yrs="
 
@@ -26,15 +24,17 @@ cache:
     - $HOME/.gradle/wrapper/
 
 install:
-  - echo -e "org.gradle.jvmargs=-Xmx2g -XX:MaxMetaspaceSize=512m\norg.gradle.caching=false" >>gradle.properties
+  - echo -e "org.gradle.internal.launcher.welcomeMessageEnabled=false" >>gradle.properties
+  - echo -e "org.gradle.dependency.verification=lenient"               >>gradle.properties
+  - echo -e "org.gradle.caching=false"                                 >>gradle.properties
 
 before_script:
   - ./gradlew -v
 
 script:
-  - ./gradlew jar test
+  - ./gradlew jar test #--info
 
-matrix:
+jobs:
   include:
     - name: openjdk8
       jdk: openjdk8
@@ -53,6 +53,13 @@ matrix:
       os: osx
       osx_image: xcode11.3
 
+    - name: arm64
+      arch: arm64
+    - name: ppc64le
+      arch: ppc64le
+    - name: s390x
+      arch: s390x
+
     # - name: 'Sonar'
     #   jdk: openjdk13
     #   script:
@@ -67,19 +74,16 @@ before_deploy:
 deploy:
   - provider: script
     script: ~/.local/bin/aws s3 sync --region=us-east-1 --cache-control "public, max-age=86400" --content-encoding utf-8 --delete build/docs/javadoc/ s3://website-javadoc.freenetproject.org
-    skip_cleanup: true
     on:
       branch: next
       jdk: openjdk8
   - provider: script
     script: ./gradlew -x test publish
-    skip_cleanup: true
     on:
       tags: true
       jdk: openjdk8
   - provider: releases
-    skip_cleanup: true
-    api_key:
+    token:
       - secure: CDYRFrmkAOdn4QJVww6/pziDVdZ67fvRsLOKbilao/oRdP0uvsYS+OfX+Spu/Y0qCY0xSehvqgUoD8KoFqWuhos3iF4N515S5WNuiqOao7Ac2vBCt0ZMJy7MktyE5mYOD1Paf891n6Z+eILWGI54GGEau3JPes0G9jdMphW4ma8=
     prerelease: true
     file: build/output/*jar
