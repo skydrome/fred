@@ -4,6 +4,11 @@ clone_depth: 10
 skip_commits:
   message: /\[ci skip\]/
 
+branches:
+  only:
+  - next
+  - gradle-6.2
+
 image:
   - Visual Studio 2017
   - Visual Studio 2019
@@ -14,7 +19,7 @@ cache:
 
 environment:
   APPVEYOR_CACHE_ENTRY_ZIP_ARGS: -t7z -m0=lzma2 -mx=9
-  GRADLE_OPTS: -Dorg.gradle.internal.launcher.welcomeMessageEnabled=false
+  GRADLE_OPTS: -Dorg.gradle.internal.launcher.welcomeMessageEnabled=false -Dorg.gradle.dependency.verification=lenient
   JAVA_OPTS: -Xmx512m "-XX:MaxMetaspaceSize=256m"
 
   matrix:

@@ -2,4 +2,5 @@
 * text=auto
 
 # Allow gradle.bat to retain CRLF
-gradlew.bat text eol=crlf
+*.bat text eol=crlf
+*.gpg binary

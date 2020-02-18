@@ -6,6 +6,11 @@ git:
   depth: 10
   quiet: true
 
+branches:
+  only:
+  - next
+  - gradle-6.2
+
 env:
   global:
     - AWS_ACCESS_KEY_ID="AKIAJQUIQIL3XTBHT3DA"

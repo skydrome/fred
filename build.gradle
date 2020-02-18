@@ -21,7 +21,16 @@ plugins {
 
 repositories {
     jcenter()
-    maven { url 'https://mvn.freenetproject.org' }
+    exclusiveContent {
+        forRepository {
+            maven {
+                url "https://mvn.freenetproject.org"
+            }
+        }
+        filter {
+            includeGroup "org.freenetproject"
+        }
+    }
 }
 
 dependencies {
