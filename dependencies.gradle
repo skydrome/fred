@@ -3,7 +3,7 @@ ext {
     tools = [
         jacoco       : '0.8.5',       // https://www.eclemma.org/jacoco
         pmd          : '6.21.0',      // https://pmd.github.io
-        spotbugs     : '4.0.0-RC1',   // https://spotbugs.github.io
+        spotbugs     : '4.0.0',       // https://spotbugs.github.io
     ]
 
     def version = [
@@ -13,7 +13,6 @@ ext {
         hamcrest     : '2.2',
         jUnit        : '4.13',
         jUnitVintage : '5.6.0',
-        //findSecBugs  : '1.10.1', // http://find-sec-bugs.github.io
     ]
 
     def libs = [
@@ -25,7 +24,6 @@ ext {
             mockito      : [group: 'org.mockito', name: 'mockito-core', version: version.mockito],
             hamcrest     : [group: 'org.hamcrest', name: 'hamcrest-library', version: version.hamcrest],
             junitvintage : [group: 'org.junit.vintage', name: 'junit-vintage-engine', version: version.jUnitVintage],
-            //findsecbugs  : [group: 'com.h3xstream.findsecbugs', name: 'findsecbugs-plugin', version: version.findSecBugs],
     ]
 
     moduleDependencies = [
@@ -37,6 +35,5 @@ ext {
             [config: "testImplementation", dep: libs.mockito],
             [config: "testImplementation", dep: libs.hamcrest],
             [config: "testRuntimeOnly", dep: libs.junitvintage],
-            //[config: "spotbugsPlugins", dep: libs.findsecbugs],
     ]
 }
