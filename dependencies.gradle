@@ -2,13 +2,13 @@ ext {
 
     tools = [
         jacoco       : '0.8.5',       // https://www.eclemma.org/jacoco
-        pmd          : '6.21.0',      // https://pmd.github.io
+        pmd          : '6.23.0',      // https://pmd.github.io
         spotbugs     : '4.0.0',       // https://spotbugs.github.io
     ]
 
     def version = [
-        bcprov       : '1.64',
-        jna          : '4.2.2',
+        bcprov       : '1.65',
+        jna          : '4.5.2',
         mockito      : '3.2.4',
         hamcrest     : '2.2',
         jUnit        : '4.13',
