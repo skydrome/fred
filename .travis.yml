@@ -1,5 +1,5 @@
 os: linux
-dist: xenial
+dist: bionic
 language: java
 
 git:
@@ -9,7 +9,7 @@ git:
 branches:
   only:
   - next
-  - gradle-6.2
+  - gradle-6.5
 
 env:
   global:
@@ -45,18 +45,18 @@ jobs:
       jdk: openjdk8
     - name: openjdk11
       jdk: openjdk11
-    - name: openjdk13
-      jdk: openjdk13
+    - name: openjdk14
+      jdk: openjdk14
 
-    - name: 1.8.0_112-b16
+    - name: jdk8
       os: osx
       osx_image: xcode9.3
-    - name: 11.0.1+13
+    - name: jdk13
       os: osx
-      osx_image: xcode10.1
-    - name: 13.0.1
+      osx_image: xcode10.3
+    - name: jdk14
       os: osx
-      osx_image: xcode11.3
+      osx_image: xcode12
 
     - name: arm64
       arch: arm64
