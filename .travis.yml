@@ -12,10 +12,11 @@ branches:
   only:
   - next
   - gradle-6.6
+  - github-ci
 
 env:
   global:
-    - JAVA_TOOL_OPTIONS=-Dhttps.protocols=TLSv1.2
+    - GRADLE_OPTS="-Dorg.gradle.caching=false -Dorg.gradle.daemon=false"
     - AWS_ACCESS_KEY_ID="AKIAJQUIQIL3XTBHT3DA"
     - secure: "C5Y0miWN35KMpWNT/r3n31J/JjUJA6a9I/w5DUkm5xFLv1oStOvNL9KykRQIL4+9yW7hYUcGOI0iP9ZjtbxRouP5//PCjhlgzIGJ3WImVZq4fLNl3sq3DYtgZJT5rUeXn8r8cKE3/sloEbcbz7dFNXmbSACuaZ0/T3IZpgP/Yrs="
 
@@ -32,15 +33,10 @@ cache:
     - $HOME/.gradle/wrapper/
 
 install:
-  - echo -e "org.gradle.internal.launcher.welcomeMessageEnabled=false" >>gradle.properties
-  - echo -e "org.gradle.dependency.verification=lenient"               >>gradle.properties
-  - echo -e "org.gradle.caching=false"                                 >>gradle.properties
-
-before_script:
-  - ./gradlew -v
+  - ./gradlew jar
 
 script:
-  - ./gradlew jar test #--info
+  - ./gradlew test
 
 jobs:
   include:
@@ -51,22 +47,23 @@ jobs:
     - name: openjdk14
       jdk: openjdk14
 
-    - name: jdk8
-      os: osx
-      osx_image: xcode9.3
-    - name: jdk13
-      os: osx
-      osx_image: xcode10.3
-    - name: jdk14
-      os: osx
-      osx_image: xcode12
-
     - name: arm64
       arch: arm64
     - name: ppc64le
       arch: ppc64le
     - name: s390x
       arch: s390x
+
+    # Travis only provides 4gb of memory for osx resulting in OOM for unit tests
+    # - name: jdk8
+    #   os: osx
+    #   osx_image: xcode9.3
+    # - name: jdk13
+    #   os: osx
+    #   osx_image: xcode10.3
+    # - name: jdk14
+    #   os: osx
+    #   osx_image: xcode12
 
     # - name: 'Sonar'
     #   jdk: openjdk14

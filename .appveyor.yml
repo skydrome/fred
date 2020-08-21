@@ -8,6 +8,7 @@ branches:
   only:
   - next
   - gradle-6.6
+  - github-ci
 
 image:
   - Visual Studio 2019
@@ -18,29 +19,19 @@ cache:
 
 environment:
   APPVEYOR_CACHE_ENTRY_ZIP_ARGS: -t7z -m0=lzma2 -mx=9
-  GRADLE_OPTS: -Dorg.gradle.internal.launcher.welcomeMessageEnabled=false -Dorg.gradle.dependency.verification=lenient
+  GRADLE_OPTS: -Dorg.gradle.caching=false -Dorg.gradle.daemon=false
   JAVA_OPTS: -Xmx512m "-XX:MaxMetaspaceSize=256m"
-  JAVA_TOOL_OPTIONS: -Dhttps.protocols=TLSv1.2
 
   matrix:
     - JAVA_HOME: C:\Program Files\Java\jdk1.8.0
     - JAVA_HOME: C:\Program Files\Java\jdk11
     - JAVA_HOME: C:\Program Files\Java\jdk14
 
-# scripts that are called before repo cloning
-# init:
-
-# scripts that run after cloning repo
-# install:
-
-before_build:
-  - gradlew.bat -v
-
 build_script:
-  - gradlew.bat --no-build-cache --no-daemon jar
+  - gradlew.bat jar
 
 test_script:
-  - gradlew.bat --no-build-cache --no-daemon test
+  - gradlew.bat test
 
 after_test:
   - ps: del -Recurse "$env:USERPROFILE\.gradle\caches\*\*.lock"

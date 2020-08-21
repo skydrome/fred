@@ -16,7 +16,7 @@ plugins {
     id "com.github.spotbugs"     version "4.0.1"
     id "org.sonarqube"           version "2.8"
     id "com.adarshr.test-logger" version "2.0.0"
-    id "org.ajoberstar.grgit"    version "4.0.1"
+    id "org.ajoberstar.grgit"    version "4.0.2"
 }
 
 repositories {
@@ -51,11 +51,13 @@ apply from: "$rootDir/gradle/analysis.gradle"
 // output: build01484-13-g5831bbf
 String gitrev = grgit.open(dir: project.rootDir).describe()
 // output: 11.0.3 amd64 (Oracle Corporation)
-String buildenv = "${System.properties['java.version']} ${System.properties['os.arch']} (${System.properties['java.vendor']})"
-// true if running on travis or appveyor
+String buildenv = "${System.properties['java.version']} ${System.properties['os.arch']}"
+// true if running on a build server
+boolean isGithub = System.getenv("GITHUB_CI")
 boolean isCiServer = System.getenv("CI")
-// true if running on windows
+// true if running on $OS
 boolean isWindows = org.gradle.internal.os.OperatingSystem.current().isWindows()
+boolean isOSX = org.gradle.internal.os.OperatingSystem.current().isMacOsX()
 
 tasks.withType(JavaCompile) {
     //options.compilerArgs += ['-Xlint:unchecked']
@@ -78,8 +80,8 @@ tasks.withType(Javadoc) {
     options.encoding = 'UTF-8'
 }
 tasks.withType(AbstractArchiveTask) {
-    preserveFileTimestamps false
-    reproducibleFileOrder  true
+    preserveFileTimestamps = false
+    reproducibleFileOrder  = true
 }
 
 // Tasks
@@ -173,22 +175,23 @@ jar {
         ant.checksum(file: "${buildDir}/libs/freenet.jar",
                      algorithm:'sha-256', property:'hash')
         println "SHA-256 of freenet.jar: ${ant.properties['hash']}"
+        println "${gitrev} compiled with ${buildenv}"
     }
 }
 
 test {
     useJUnitPlatform()
-    ignoreFailures = true
+    ignoreFailures = false
 
     reports {
-        html.enabled true
+        html.enabled = true
         html.destination = file("${buildDir}/reports/junit")
     }
 
     testlogger {
         theme 'standard-parallel'
-        slowThreshold 10000
-        showFailedStandardStreams true
+        slowThreshold = 10000
+        showFailedStandardStreams = true
     }
 
     if ((findProperty('parallelTests')?:'false') == 'true')
@@ -198,16 +201,9 @@ test {
     include 'freenet/**/*Test.class'
     exclude 'freenet/**/*$*Test.class'
 
-    // adds ability to exlude tests from command line options
-    // ex: gradle test -PexcludeTests="freenet.client.async.SplitFileFetcherStorageTest,test2,etc"
-    project.properties['excludeTests']?.replaceAll('\\.', '\\/')?.split('[,;]').each {
-        exclude "${it}.class"
-    }
-
-    // TODO: these tests hang on windows or use alot of resources on CI servers
-    if (isWindows || isCiServer)
-        exclude(['freenet/store/RAMSaltMigrationTest*',
-                 'freenet/store/caching/CachingFreenetStoreTest*'])
+    // TODO: M3UFilterTest fails only on github/windows
+    // if (isGithub && isWindows)
+    //      exclude(['freenet/client/filter/M3UFilterTest*'])
 
     systemProperties += [
         "test.l10npath_test": "freenet/l10n/",

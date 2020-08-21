@@ -1,0 +1,27 @@
+name: Gradle Nightly
+
+on: [push, pull_request]
+
+jobs:
+  build:
+    runs-on: ubuntu-20.04
+
+    name: Java EA
+    steps:
+      
+      - name: Checkout
+        uses: actions/checkout@v2
+        with:
+          fetch-depth: 1
+
+      - name: Setup Java
+        uses: actions/setup-java@v1
+        with:
+          java-version: 15-ea
+
+      - name: Build
+        uses: eskatos/gradle-command-action@v1
+        with:
+          dependencies-cache-enabled: true
+          gradle-version: nightly
+          arguments: -Dorg.gradle.caching=false -PtargetJavaVersion=15 --no-daemon --warning-mode all -S jar #test
