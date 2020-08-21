@@ -29,7 +29,8 @@ jobs:
 
       - name: Checkout
         uses: actions/checkout@v2
-      - run: git fetch --prune --unshallow
+      - name: Fetch Tags
+        run: git fetch --prune --unshallow
 
       - name: Setup Java
         uses: actions/setup-java@v1
