@@ -195,7 +195,7 @@ test {
     }
 
     if ((findProperty('parallelTests')?:'false') == 'true')
-        maxParallelForks = Runtime.runtime.availableProcessors().intdiv(2) ?: 1
+        maxParallelForks = Runtime.runtime.availableProcessors()
 
     workingDir sourceSets.test.output.resourcesDir
     include 'freenet/**/*Test.class'
