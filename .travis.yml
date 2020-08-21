@@ -33,10 +33,10 @@ cache:
     - $HOME/.gradle/wrapper/
 
 install:
-  - ./gradlew jar
+  - git fetch --prune --unshallow
 
 script:
-  - ./gradlew test
+  - ./gradlew jar test
 
 jobs:
   include:
