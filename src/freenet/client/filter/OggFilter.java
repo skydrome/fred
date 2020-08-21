@@ -17,7 +17,6 @@ import java.util.HashMap;
 import java.util.LinkedList;
 
 import freenet.l10n.NodeL10n;
-import freenet.support.io.Closer;
 import freenet.support.io.CountedOutputStream;
 
 /** Filters Ogg container files. These containers contain one or more
@@ -29,9 +28,10 @@ import freenet.support.io.CountedOutputStream;
  */
 public class OggFilter implements ContentDataFilter{
 
-	public void readFilter(InputStream input, OutputStream output,
-			String charset, HashMap<String, String> otherParams,
-			FilterCallback cb) throws DataFilterException, IOException {
+	public void readFilter(
+      InputStream input, OutputStream output,
+      String charset, HashMap<String, String> otherParams,
+      String hostPort, FilterCallback cb) throws DataFilterException, IOException {
 		HashMap<Integer, OggBitstreamFilter> streamFilters = new HashMap<Integer, OggBitstreamFilter>();
 		LinkedList<OggPage> splitPages = new LinkedList<OggPage>();
 		CountedOutputStream out = new CountedOutputStream(output);
@@ -78,50 +78,39 @@ public class OggFilter implements ContentDataFilter{
 	 * @throws IOException
 	 */
 	private boolean hasValidSubpage(OggPage page, OggPage nextPage) throws IOException {
-		OggPage subpage = null;
 		int pageCount = 0;
-		ByteArrayOutputStream data = null;
-		DataInputStream in = null;
-		try{
+		try(ByteArrayOutputStream data = new ByteArrayOutputStream()) {
 			//Populate a byte array with all the data in which a subpage might hide
-			data = new ByteArrayOutputStream();
 			data.write(page.toArray());
 			if(nextPage != null) data.write(nextPage.toArray());
-			in = new DataInputStream(new ByteArrayInputStream(data.toByteArray()));
-			data.close();
-			while(true) {
-				OggPage.seekToPage(in);
-				in.mark(65307);
-				subpage = new OggPage(in);
-				if(subpage.headerValid()) {
-					pageCount++;
+			try(DataInputStream in = new DataInputStream(new ByteArrayInputStream(data.toByteArray()))) {
+				data.close();
+				while(true) {
+					OggPage.seekToPage(in);
+					in.mark(65307);
+					OggPage subpage = new OggPage(in);
+					if(subpage.headerValid()) {
+						pageCount++;
+					}
+					in.reset();
+					in.skip(1); //Break the lock on the current page
 				}
-				in.reset();
-				in.skip(1); //Break the lock on the current page
 			}
 		} catch(EOFException e) {
 			//We've ran out of data to read. Break.
-			in.close();
-		} finally {
-			Closer.close(data);
-			Closer.close(in);
 		}
 		return (pageCount > 2 || hasValidSubpage(page));
 	}
 
 	private boolean hasValidSubpage(OggPage page) throws IOException {
-		DataInputStream in = new DataInputStream(new ByteArrayInputStream(page.toArray()));
-		in.skip(1); //Break alignment with the first page
-		try {
+		try(DataInputStream in = new DataInputStream(new ByteArrayInputStream(page.toArray()))) {
+			in.skip(1); //Break alignment with the first page
 			while(true) {
 				OggPage subpage = OggPage.readPage(in);
 				if(subpage.headerValid()) return true;
 			}
 		} catch(EOFException e) {
 			//We've ran out of data to read. Break.
-			in.close();
-		} finally {
-			Closer.close(in);
 		}
 		return false;
 	}
@@ -130,7 +119,7 @@ public class OggFilter implements ContentDataFilter{
 			String charset, HashMap<String, String> otherParams,
 			FilterCallback cb) throws DataFilterException, IOException {
 		// TODO Auto-generated method stub
-		
+
 	}
 
 	private static String l10n(String key) {

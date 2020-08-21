@@ -580,6 +580,7 @@ public final class FProxyToadlet extends Toadlet implements RequestClient {
 		}
 
 		FetchContext fctx = getFetchContext(maxSize);
+		fctx.host = ctx.getHeaders().get("host");
 		// max-size=-1 => use default
 		maxSize = fctx.maxOutputLength;
 
