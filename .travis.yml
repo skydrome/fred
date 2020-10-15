@@ -44,8 +44,8 @@ jobs:
       jdk: openjdk8
     - name: openjdk11
       jdk: openjdk11
-    - name: openjdk14
-      jdk: openjdk14
+    - name: openjdk15
+      jdk: openjdk15
 
     - name: arm64
       arch: arm64
