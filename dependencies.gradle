@@ -1,9 +1,10 @@
 ext {
 
     tools = [
-        jacoco       : '0.8.5',   // https://www.eclemma.org/jacoco
-        pmd          : '6.26.0',  // https://pmd.github.io
-        spotbugs     : '4.5.0',   // https://spotbugs.github.io
+        jacoco       : '0.8.6',   // https://www.eclemma.org/jacoco
+        pmd          : '6.28.0',  // https://pmd.github.io
+        spotbugs     : '4.5.1',   // https://spotbugs.github.io
+                                  // https://plugins.gradle.org/plugin/com.github.spotbugs
     ]
 
     def version = [
