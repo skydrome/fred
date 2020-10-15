@@ -32,9 +32,9 @@ ext {
             [config: "implementation", dep: libs.jna],
             [config: "implementation", dep: libs.jnaplatform],
             [config: "implementation", dep: libs.freenet],
-            [config: "testImplementation", dep: libs.junit],
-            [config: "testImplementation", dep: libs.mockito],
-            [config: "testImplementation", dep: libs.hamcrest],
-            [config: "testRuntimeOnly", dep: libs.junitvintage],
+            // [config: "testImplementation", dep: libs.junit],
+            // [config: "testImplementation", dep: libs.mockito],
+            // [config: "testImplementation", dep: libs.hamcrest],
+            // [config: "testRuntimeOnly", dep: libs.junitvintage],
     ]
 }
