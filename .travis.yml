@@ -11,7 +11,7 @@ git:
 branches:
   only:
   - next
-  - gradle-6.6
+  - gradle-*
   - github-ci
 
 env:
