@@ -71,7 +71,6 @@ jobs:
     #     - ./gradlew clean
     #     - ./gradlew test pmdMain pmdTest spotbugsMain spotbugsTest jacocoTestReport sonarqube
 
-
 before_deploy:
   - pip install --user awscli
   - ./gradlew copyRuntimeLibs javadoc
