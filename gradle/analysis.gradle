@@ -1,24 +1,33 @@
 apply plugin: 'com.github.spotbugs'
+
+def classLoader = plugins.getAt('com.github.spotbugs').class.classLoader
+def SpotBugsTask = classLoader.findLoadedClass('com.github.spotbugs.snom.SpotBugsTask')
+
 spotbugs {
-    toolVersion = tools.spotbugs
     showProgress = true
     ignoreFailures = true
     effort = 'default'
     reportLevel = 'medium'
-    jvmArgs = ['-Xmx1g']
+    maxHeapSize = '1g'
     excludeFilter = file("${project.rootDir}/gradle/spotbugs-filter.xml")
 }
-spotbugsMain {
+
+tasks.withType(SpotBugsTask) {
     reports {
-        //html.enabled = true
-        xml.enabled  = true
+        html {
+            enabled = false
+            stylesheet = 'fancy-hist.xsl'
+        }
+        xml {
+            enabled  = true
+        }
     }
 }
 
+
 apply plugin: "jacoco"
 jacoco {
-    toolVersion = tools.jacoco
-    reportsDir = file("$buildDir/reports/jacoco")
+    reportsDirectory = file("$buildDir/reports/jacoco")
 }
 jacocoTestReport {
     classDirectories.from = fileTree(
@@ -30,20 +39,12 @@ jacocoTestReport {
         html.enabled = true
     }
 }
-test {
-    jacoco {
-        // https://github.com/gradle/gradle/issues/5184#issuecomment-391982009
-        includeNoLocationClasses = true
-        excludes = ['jdk.internal.*']
-    }
-}
 
 
 apply plugin: 'pmd'
 pmd {
-    toolVersion = tools.pmd
     ignoreFailures = true
-    rulePriority = 3
+    rulesMinimumPriority = 3
     ruleSets = []
     ruleSetFiles = files("${project.rootDir}/gradle/pmd-rules.xml")
     reportsDir = file("$buildDir/reports/pmd")
