@@ -12,10 +12,10 @@ buildscript {
 
 plugins {
     id "java"
-    id "maven-publish"
-    id "com.github.spotbugs"     version "4.6.0"
-    id "org.sonarqube"           version "3.0"
-    id "com.adarshr.test-logger" version "2.1.1"
+    // id "maven-publish"
+    // id "com.github.spotbugs"     version "4.6.0"
+    // id "org.sonarqube"           version "3.0"
+    // id "com.adarshr.test-logger" version "2.1.1"
     id "org.ajoberstar.grgit"    version "4.1.0"
 }
 
@@ -46,7 +46,7 @@ sourceSets {
 }
 
 // Configuration
-apply from: "$rootDir/gradle/analysis.gradle"
+// apply from: "$rootDir/gradle/analysis.gradle"
 
 // output: build01484-13-g5831bbf
 String gitrev = grgit.open(dir: project.rootDir).describe()
@@ -188,11 +188,11 @@ test {
         html.destination = file("${buildDir}/reports/junit")
     }
 
-    testlogger {
-        theme 'standard-parallel'
-        slowThreshold = 10000
-        showFailedStandardStreams = true
-    }
+    // testlogger {
+    //     theme 'standard-parallel'
+    //     slowThreshold = 10000
+    //     showFailedStandardStreams = true
+    // }
 
     if ((findProperty('parallelTests')?:'false') == 'true')
         maxParallelForks = Runtime.runtime.availableProcessors().intdiv(2) ?: 1
@@ -212,22 +212,22 @@ test {
 }
 
 // Release Publication
-publishing {
-    publications {
-        mavenJava(MavenPublication) {
-            groupId 'org.freenetproject'
-            artifactId "fred"
-            version gitrev
-            from components.java
-        }
-    }
-    repositories {
-        maven {
-            url "s3://mvn.freenetproject.org/"
-            credentials(AwsCredentials) {
-                accessKey System.getenv('AWS_ACCESS_KEY_ID')
-                secretKey System.getenv('AWS_SECRET_ACCESS_KEY')
-            }
-        }
-    }
-}
+// publishing {
+//     publications {
+//         mavenJava(MavenPublication) {
+//             groupId 'org.freenetproject'
+//             artifactId "fred"
+//             version gitrev
+//             from components.java
+//         }
+//     }
+//     repositories {
+//         maven {
+//             url "s3://mvn.freenetproject.org/"
+//             credentials(AwsCredentials) {
+//                 accessKey System.getenv('AWS_ACCESS_KEY_ID')
+//                 secretKey System.getenv('AWS_SECRET_ACCESS_KEY')
+//             }
+//         }
+//     }
+// }
