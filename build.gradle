@@ -21,7 +21,6 @@ plugins {
 
 repositories {
     mavenCentral()
-    jcenter()
     exclusiveContent {
         forRepository {
             maven {
