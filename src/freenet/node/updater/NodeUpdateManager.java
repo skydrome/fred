@@ -163,7 +163,7 @@ public class NodeUpdateManager {
 	private boolean updateSeednodes;
 	private boolean updateInstallers;
 	// FIXME make configurable
-	private boolean updateIPToCountry = true;
+	private boolean updateIPToCountry = false;
 
 	/** Is there a new main jar ready to deploy? */
 	private volatile boolean hasNewMainJar;
