@@ -5,8 +5,8 @@ ext {
         jna          : '4.5.2',
         mockito      : '3.6.28',
         hamcrest     : '2.2',
-        jUnit        : '4.13.1',
-        jUnitVintage : '5.7.0',
+        jUnit        : '4.13.2',
+        jUnitVintage : '5.7.1',
     ]
 
     def libs = [
