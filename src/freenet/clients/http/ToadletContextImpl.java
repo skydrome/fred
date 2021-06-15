@@ -465,7 +465,7 @@ public class ToadletContextImpl implements ToadletContext {
 	private static String generateRestrictedScriptSrc() {
 		// TODO: auto-generate these hashes from the path to the source file
 		String[] allowedScriptHashes = new String[] {
-				"sha256-kglOvopjCg9Et+Z7jBUnNbj1Rk9KWnmda4XnYrbYxsE=" // freenet/clients/http/staticfiles/js/m3u-player.js
+				"sha256-uBohlLWVKw+CT6aoh/dTlBfKXU7QWzLXnomOhe7JxdQ=" // freenet/clients/http/staticfiles/js/m3u-player.js
 		};
 		if (allowedScriptHashes.length == 0) {
 			return "'none'";
@@ -579,13 +579,11 @@ public class ToadletContextImpl implements ToadletContext {
 				
 				Bucket data;
 
-				boolean methodIsConfigurable = true;
 
 				String slen = headers.get("content-length");
 
 				if (METHODS_MUST_HAVE_DATA.contains(method)) {
 					// <method> must have data
-					methodIsConfigurable = false;
 					if (slen == null) {
 						ctx.shouldDisconnect = true;
 						ctx.sendReplyHeaders(400, "Bad Request", null, null, -1);
@@ -593,7 +591,6 @@ public class ToadletContextImpl implements ToadletContext {
 					}
 				} else if (METHODS_CANNOT_HAVE_DATA.contains(method)) {
 					// <method> can not have data
-					methodIsConfigurable = false;
 					if (slen != null) {
 						ctx.shouldDisconnect = true;
 						ctx.sendReplyHeaders(400, "Bad Request", null, null, -1);
