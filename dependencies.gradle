@@ -1,12 +1,12 @@
 ext {
 
     def version = [
-        bcprov       : '1.68',
+        bcprov       : '1.69',
         jna          : '4.5.2',
         mockito      : '3.6.28',
         hamcrest     : '2.2',
         jUnit        : '4.13.2',
-        jUnitVintage : '5.7.1',
+        jUnitVintage : '5.7.2',
     ]
 
     def libs = [

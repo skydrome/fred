@@ -15,11 +15,11 @@ spotbugs {
 tasks.withType(SpotBugsTask) {
     reports {
         html {
-            enabled = false
+            required = false
             stylesheet = 'fancy-hist.xsl'
         }
         xml {
-            enabled  = true
+            required = true
         }
     }
 }
@@ -35,8 +35,8 @@ jacocoTestReport {
         excludes: ['**/Manifest*.*']
     )
     reports {
-        xml.enabled  = true
-        html.enabled = true
+        xml.required  = true
+        html.required = true
     }
 }
 
@@ -51,8 +51,8 @@ pmd {
 }
 tasks.withType(Pmd) {
     reports {
-        xml.enabled  = true
-        html.enabled = true
+        xml.required  = true
+        html.required = true
     }
 }
 
