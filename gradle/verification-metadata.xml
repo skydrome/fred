@@ -40,6 +40,7 @@
             <trusting group="org.apiguardian"/>
             <trusting group="org.junit.platform"/>
             <trusting group="org.opentest4j"/>
+            <trusting group="org.junit"/>
          </trusted-key>
       </trusted-keys>
    </configuration>
